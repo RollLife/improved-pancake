@@ -1,0 +1,45 @@
+<table>
+	<tr>
+		<td>제목</td>
+		<td>글쓴이</td>
+	</tr>
+	<tr>
+		<td>{{total.title}}</td>
+		<td>{{total.writer}}</td>
+	</tr>
+	<tr>
+		<td>게시글</td>
+	</tr>
+	<tr>
+		<td>{{total.content}}</td>
+	</tr>
+</table>
+<form action="/delete" style="display: inline;">
+    <input type="submit" value="삭제하기">
+</form>
+<form action="/update" style="display: inline;">
+    <input type="submit" value="수정하기">
+</form>
+<br><br>
+<form action="{{url_for('show_board')}}">
+	<input type="submit" value="되돌아가기">
+</form>
+
+<table style="font-size:10px">
+	<tr>
+		<td>제목</td>
+		<td>글쓴이</td>
+	</tr>
+	{% for comment in com %}
+	<tr>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{{comment.writer}}</td>
+		<td>{{comment.content}}</td>
+	</tr>
+	{% endfor %}
+</table>
+<form action="/comment">
+	<input type="submit" value="댓글쓰기">
+</form>

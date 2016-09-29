@@ -1,0 +1,8 @@
+<form action="/comment_action" method="post">
+	글쓴이<input type="text" name="insert_writer"><br>
+	내용<textarea name="insert_content"></textarea><br>
+	<input type="submit" name="" value="쓰기">
+</form>
+<form action="{{url_for('show_board')}}">
+	<input type="submit" value="되돌아가기">
+</form>

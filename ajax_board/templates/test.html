@@ -1,0 +1,46 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Ajax 간단 테스트</title>
+ 
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+
+ 
+<script type="text/javascript" language="javascript">
+ 
+    $(document).ready(function(){
+         
+         
+        $.ajax({
+          url : "<c:url value='/example01.do'/>",
+          data : {
+            sampleInput : "sampleData"
+          },
+          success : function(data, textStatus, jqXHR) {
+            //Sucess시, 처리
+          }, 
+          error : function(jqXHR, textStatus, errorThrown){
+            //Error시, 처리
+        }
+        });
+
+         
+ 
+    });
+ 
+</script>
+ 
+</head>
+<body>
+ 
+    <div id="dataArea"></div>
+ 
+</body>
+</html>

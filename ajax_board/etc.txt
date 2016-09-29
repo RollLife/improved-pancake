@@ -1,0 +1,114 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<table>
+    <tr>
+        <td>번호</td>
+        <td>제목</td>
+        <td>글쓴이</td>
+    </tr>
+    <tr>
+        <td>0</td>
+        <td>얄리얄리얄라셩얄라리얄라</td>
+        <td>김혜수</td>
+    </tr>
+    <table id="commentTable" class="table table-condensed"></table>
+</table><br>
+<label>이름</label>
+<input type="text" id="b_name" name="b_name"><br>
+<label>제목</label>
+<input type="text" id="b_title" name="b_title"><br><label>내용</label>
+<textarea id = "b_content" name='b_content'></textarea>
+<br>
+<input type="button" name="b_write" value="글쓰기">
+<form action="/example">
+    <input type="submit" value="예제보기">
+</form>
+<script>
+   
+                        $(function(){
+                               
+                            //제일 하단에 있는 depth1의 댓글을 다는 이벤트
+                            $("#b_write").click(function( event ) {
+                                   
+                                //ajax로 저장하고 성공하면 저장한 데이터를 가져와 넣어야 하는데 여기서는 테스트라 그냥 입력값을 가져옴
+                                var pName = $("#b_name");
+                                var ptitle = $("#b_title");//패스워드를 노출 시켰는데 저장하고 나서 저장한 날짜를 보여줄 예정
+                                var pText = $("#b_content");
+                                   
+                                if($.trim(pName.val())==""){
+                                    alert("이름을 입력하세요.");
+                                    pName.focus();
+                                    return;
+                                }else if($.trim(ptitle.val())==""){
+                                    alert("패스워드를 입력하세요.");
+                                    ptitle.focus();
+                                    return;
+                                }else if($.trim(pText.val())==""){
+                                    alert("내용을 입력하세요.");
+                                    pText.focus();
+                                    return;
+                                }
+                                   
+                                var commentParentText = '<tr id="r1" name="commentParentCode">'+
+                                                            '<td colspan=2>'+
+                                                                '<strong>'+pName.val()+'</strong> '+ptitle.val()+' <a style="cursor:pointer;" name="pAdd">답글</a> | <a style="cursor:pointer;" name="pDel">삭제</a><p>'+pText.val().replace(/\n/g, "<br>")+'</p>'+
+                                                            '</td>'+
+                                                        '</tr>';
+                                   
+                                //테이블의 tr자식이 있으면 tr 뒤에 붙인다. 없으면 테이블 안에 tr을 붙인다.
+                                if($('#commentTable').contents().size()==0){
+                                    $('#commentTable').append(commentParentText);
+                                }else{
+                                    $('#commentTable tr:last').after(commentParentText);
+                                }
+                                
+                                //답글은 다쓴뒤 모든 텍스트 값을 초기화   
+                                $("#b_name").val("");
+                                $("#b_title").val("");
+                                $("#b_content").val("");
+                                   
+                            });
+                            $( "#list" ).click(function( event ) {
+                                location.href='/community/notice';
+                            });
+                            $( "#modify" ).click(function( event ) {
+                                location.href='/community/modify/notice/${community.id}';
+                            });
+                            $( "#delete" ).click(function( event ) {
+                                location.href='/community/delete/notice/${community.id}';
+                            });
+                            $( "#write" ).click(function( event ) {
+                                location.href='/community/notice/edit';
+                            });
+                        });
+</script>
+</body>
+</html> -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
+<script>window.jQuery || document.write('<script src="{{url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+
+<script type=text/javascript>
+  $(function() {
+    $('a#calculate').bind('click', function() {
+      $.getJSON($SCRIPT_ROOT + '/_add_numbers', {
+        a: $('input[name="a"]').val(),
+        b: $('input[name="b"]').val()
+      }, function(data) {
+        $("#result").text(data.result);
+      });
+      return false;
+    });
+  });
+</script>
+<h1>jQuery Example</h1>
+<p><input type=text size=5 name=a> +
+   <input type=text size=5 name=b> =
+   <span id=result>?</span>
+<p><a href=# id=calculate>calculate server side</a>
