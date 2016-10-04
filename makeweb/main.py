@@ -3,23 +3,93 @@ from contextlib import closing
 
 from flask import Flask, render_template, url_for, request
 
+from math import ceil
+from collections import OrderedDict
+
 app = Flask(__name__)
 
 total = []
 comment = []
 tem = []
+count = [0]
+list_num = 3.0
+page_num = 4.0
 page = []
 
-@app.route('/')
+@app.route('/', methods = ['GET'])
 @app.route('/index')
 def show_board():
-	finals = [dict(index = i,title = row[0], writer = row[1], content = row[2]) for i ,row in enumerate(total)]
-	pagingNum =  len(total)
-	# if pagingNum/3 ==0:
-	# 	page.append("")
-	# print page
-	# print len(page)
-	return render_template('index.html', finals = finals)
+	finals = [dict(index = i,title = row[0], writer = row[1], content = row[2]) for i ,row in enumerate(total)] #total[::-1]
+	
+	total_page = int(ceil(len(total)/list_num))
+	block_page = float(ceil(len(total)/list_num))
+
+
+	# if not total:
+	# 	pass
+	# else:
+	# 	page.append(total_page)
+	# 	try:
+	# 		if page[-1] == page[-2]:
+	# 			del page[-1]
+	# 	except:
+	# 		pass
+
+	# for i in range(len(total)):
+	# 	if i % 3 ==0:
+	# 		if i == 0 or i == 1:
+	# 			pass
+	# 		else:
+	# 			count.append(count[-1]+1)
+
+	# 	total[i].append(page[count[-1]])
+	# 	print total
+
+	# except:
+	# 	pass
+
+	total_block = int(ceil(block_page/page_num))
+
+	# print "count", count
+	# print "length",len(total)
+	# print "page",page
+	# print 'page',page[::3]
+	# print 'total',total
+	# print 'total_page',total_page
+	# print 'block_page',total_block
+
+	return render_template('index.html', finals = finals, t = page)
+
+@app.route('/list')
+def list_link():
+	finals = [dict(index = i,title = row[0], writer = row[1], content = row[2]) for i ,row in enumerate(total)] #total[::-1]
+	
+	total_page = int(ceil(len(total)/list_num))
+	block_page = float(ceil(len(total)/list_num))
+
+
+	# try:
+	# 	if page[-1] == page[-2]:
+	# 		pass
+	# 	else:
+
+	if not total:
+		pass
+	else:
+		page.append(total_page)
+		try:
+			if page[-1] == page[-2]:
+				del page[-1]
+		except:
+			pass
+
+	# except:
+	# 	pass
+
+	total_block = int(ceil(block_page/page_num))
+#	block = ceil(page/page_num)
+	
+	return render_template('list.html', finals = finals, page = page)
 
 @app.route('/insert')
 def insert_form():
@@ -27,8 +97,6 @@ def insert_form():
 
 @app.route('/add', methods=['GET','POST'])
 def add():
-	b_page_list = 10;
-	pageNum = 1
 	if request.method == 'POST':
 		one_by_one = []
 		title = request.form['insert_title']

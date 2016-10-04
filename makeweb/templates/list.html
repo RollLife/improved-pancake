@@ -17,7 +17,7 @@
         </tr>
         {% endfor %}
         </table>
-        {% for a in t %}
+        {% for a in page %}
         <a href="/?page={{a}}">{{a}}</a>
         {% endfor %}<br>
         <form action="{{ url_for('insert_form') }}" style="display: inline;">
