@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>상세보기 페이지</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+<table>
+	<tr>
+		<td>제목</td>
+		<td>글쓴이</td>
+	</tr>
+	<tr>
+		<td id = "title"></td>
+		<td id = "writer"></td>
+	</tr>
+	<tr>
+		<td>게시글</td>
+	</tr>
+	<tr>
+		<td id = "content"></td>
+	</tr>
+</table>
+<form action="/delete" style="display: inline;">
+    <input type="submit" value="삭제하기">
+</form>
+<form action="/update" style="display: inline;">
+    <input type="submit" value="수정하기">
+</form>
+<br><br>
+<form action="{{url_for('index')}}">
+	<input type="submit" value="되돌아가기">
+</form>
+
+<br>
+
+<form action = "/comment" method = "post">
+   <label for = "email">Writer</label><br>
+   <input type = "text" name = "writer" placeholder = "writer" /><br>
+   <label for = "content">content</label><br>
+   <textarea name = "content" placeholder = "content"></textarea><br>
+   <input type = "submit" value = "댓글쓰기" />
+</form>
+
+<br>
+<table style="font-size:10px">
+	<tr>
+		<td>제목</td>
+		<td>글쓴이</td>
+	</tr>
+
+</table>
+
+
+
+<script>
+$(document).ready(function(){
+	$.ajax({
+		url : '/view_list',
+		success : function(data){
+			var array = data.array;
+			var get_data = window.location.search
+			var index = get_data.slice(4,get_data.length)
+			var detail = array[index]
+
+			document.getElementById('title').innerHTML += detail[0];
+			document.getElementById('writer').innerHTML += detail[2];
+			document.getElementById('content').innerHTML += detail[1];
+		}
+
+	});
+});	
+</script>
+</body>
+</html>

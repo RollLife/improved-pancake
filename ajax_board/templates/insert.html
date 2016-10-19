@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<script src="{{ url_for('static', filename='js/form.js') }}"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+		</head>
+<body>
+<form method="POST">
+	제목<input type="text" name="insert_title" id="insert_title"><br>
+	글쓴이<input type="text" name="insert_writer" id ="insert_writer"><br>
+	내용<textarea name="insert_content" id = "insert_content"></textarea><br>
+	<input type="submit" value="쓰기" id ="submit">
+</form>
+<form action="{{url_for('index')}}">
+	<input type="submit" value="되돌아가기">
+</form>
+	<div id="successAlert" class="alert alert-success" role="alert" style="display:none;"></div>
+	<div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;"></div>
+<script>
+$(document).ready(function() {
+
+	$('form').on('submit', function(event) {
+		$.ajax({
+			data : {
+				title : $('#insert_title').val(),
+				writer : $('#insert_writer').val(),
+				content : $('#insert_content').val()
+			},
+			type : 'POST',
+			url : '/add'
+		})
+		.done(function(data) {
+			if (data.error) {
+				location.href='/';
+				$('#errorAlert').text(data.error).show();
+				$('#successAlert').hide();
+			}
+			else {
+				location.href='/';
+				$('#errorAlert').hide();
+			}
+
+		});
+
+		event.preventDefault();
+
+	});
+
+});
+</script>
+</body>
+</html>
+
