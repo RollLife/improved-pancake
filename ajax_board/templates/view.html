@@ -21,10 +21,10 @@
 		<td id = "content"></td>
 	</tr>
 </table>
-<form action="/delete" style="display: inline;">
+<form id = "delete" style="display: inline;">
     <input type="submit" value="삭제하기">
 </form>
-<form action="/update" style="display: inline;">
+<form id = "update" style="display: inline;">
     <input type="submit" value="수정하기">
 </form>
 <br><br>
@@ -34,19 +34,17 @@
 
 <br>
 
-<form action = "/comment" method = "post">
-   <label for = "email">Writer</label><br>
-   <input type = "text" name = "writer" placeholder = "writer" /><br>
-   <label for = "content">content</label><br>
-   <textarea name = "content" placeholder = "content"></textarea><br>
-   <input type = "submit" value = "댓글쓰기" />
-</form>
 
+   <label for = "title">title</label><br>
+   <input type = "text" name = "comment_title" placeholder = "title" id = "comment_title" /><br>
+   <label for = "content">content</label><br>
+   <textarea name = "comment_content" placeholder = "content" id ="comment_content"></textarea><br>
+   <input type = "submit"  id="comment" value = "댓글쓰기" />
 <br>
-<table style="font-size:10px">
+<table style="font-size:10px" id = "show_comment">
 	<tr>
 		<td>제목</td>
-		<td>글쓴이</td>
+		<td>내용</td>
 	</tr>
 
 </table>
@@ -63,13 +61,72 @@ $(document).ready(function(){
 			var index = get_data.slice(4,get_data.length)
 			var detail = array[index]
 
+			var comment = data.comment_Array[index]
+			
 			document.getElementById('title').innerHTML += detail[0];
 			document.getElementById('writer').innerHTML += detail[2];
 			document.getElementById('content').innerHTML += detail[1];
+			
+			console.log(comment)
+
+
+			$('#delete').click(function(){
+				$.ajax({
+					url :'/delete'+'?id='+index,
+					success : function(data){
+						location.href = '/';
+					}
+				});
+			});
+			$('#update').click(function(){
+				$.ajax({
+					url :'/update',
+					success : function(data){
+						location.href = '/update'+'?id='+index;
+					}
+				});
+			})
+			$('#comment').click(function(){
+				$.ajax({
+					url : '/comment'+'?id='+index,
+					data : {
+						title : $('#comment_title').val(),
+						content : $('#comment_content').val()
+					}
+				});
+			});
+
+            $.each(comment, function(index, item){
+                var output = '';
+                output += '<tr>'
+                output += '<td style="text-align:center;">'+ item[0] +'</td>'
+                output += '<td style="text-align:center;">'+ item[1] +'</td>'
+                output += '</tr>'
+                document.getElementById('show_comment').innerHTML += output;
+            });
+
 		}
 
 	});
 });	
 </script>
+<!-- <script>
+	$(document).ready(function(){
+		$('#comment').click(function(){
+			$.ajax({
+				data : {
+					title : $('#comment_title').val(),
+					content : $('#comment_content').val()
+				},
+
+				type : "POST",
+				url : '/comment',
+				success : function(data){
+					console.log(data.title);
+				}
+			});
+		});
+	})
+</script> -->
 </body>
 </html>

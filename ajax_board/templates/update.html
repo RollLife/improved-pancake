@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<form method="POST">
+	제목<input type="text" name="update_title" id="update_title"><br>
+	내용<textarea name="update_content" id = "update_content"></textarea><br>
+	<input type="submit" value="쓰기" id ="submit">
+</form>
+<script>
+$(document).ready(function(){
+	$('form').click(document){
+		$.ajax(fucntion(){
+			data : {
+				title : $('#update_title').val(),
+				content : $('#update_content').val()
+			},
+			type : 'POST',
+			url : '/action',
+			success : function(){
+				var get_data = window.location.search
+				var index = get_data.slice(4,get_data.length)
+				location.href = '/action?id='+index;
+			}
+		})
+	}
+})
+</script>
+</body>
+</html>
