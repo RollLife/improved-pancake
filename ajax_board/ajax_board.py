@@ -14,7 +14,6 @@ def index():
 	print ajax
 	return render_template('index.html')
 
-
 @app.route('/insert')
 def insert_form():
 	return render_template('insert.html')
@@ -63,6 +62,7 @@ def example():
 def show_detail():
 	return render_template('view.html')
 
+
 @app.route('/view_list')
 def detail_option():
 	return jsonify({'array':ajax,'comment_Array':comment_Array})
@@ -81,7 +81,6 @@ def update_insert():
 @app.route('/action', methods=['GET'])
 def update_detail():
 	num = request.args['id']
-	print num
 	return redirect(url_for('index'))
 
 @app.route('/comment', methods=['GET'])
@@ -95,7 +94,6 @@ def comment_insert():
 	one_by_one.append(content)
 	comment_Array[num].append(one_by_one)
 
-
 	# if request.method == 'POST':
 	# 	title = request.form['comment_title']
 	# 	content = request.form['comment_content']
@@ -103,7 +101,7 @@ def comment_insert():
 	# comment_Array.append(content)
 
 	print comment_Array
-	return jsonify({})
+	return jsonify({'click_comment':comment_Array})
 
 if __name__ == '__main__':
     app.run(debug=True)

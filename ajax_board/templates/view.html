@@ -60,15 +60,22 @@ $(document).ready(function(){
 			var get_data = window.location.search
 			var index = get_data.slice(4,get_data.length)
 			var detail = array[index]
+			var count = 0
 
-			var comment = data.comment_Array[index]
-			
 			document.getElementById('title').innerHTML += detail[0];
 			document.getElementById('writer').innerHTML += detail[2];
 			document.getElementById('content').innerHTML += detail[1];
-			
-			console.log(comment)
 
+			var comment = data.comment_Array[index]
+			var none_click = comment.length
+            $.each(comment, function(index, item){
+                var output = '';
+                output += '<tr>'
+                output += '<td style="text-align:center;">'+ item[0] +'</td>'
+                output += '<td style="text-align:center;">'+ item[1] +'</td>'
+                output += '</tr>'
+                document.getElementById('show_comment').innerHTML += output;
+            });
 
 			$('#delete').click(function(){
 				$.ajax({
@@ -92,19 +99,30 @@ $(document).ready(function(){
 					data : {
 						title : $('#comment_title').val(),
 						content : $('#comment_content').val()
+					},
+					// success: function(res){
+					// 	if(res == "success"){
+
+					// 	}
+					// }
+					success : function(data){
+						count = count - 1
+						alert(comment.length)
+						var comment = data.comment_Array[index]
+						var click_comment = []
+						click_comment.push(comment.slice(count))
+						console.log(click_comment.slice(0))
+						console.log(comment[-1])
+						console.log(comment.slice(-1)[0][0])
+						var output = '';
+		                output += '<tr>'
+		                output += '<td style="text-align:center;">'+ comment.slice(-1)[0][0] +'</td>'
+		                output += '<td style="text-align:center;">'+ comment.slice(-1)[0][1] +'</td>'
+		                output += '</tr>'
+		                document.getElementById('show_comment').innerHTML += output;
 					}
 				});
 			});
-
-            $.each(comment, function(index, item){
-                var output = '';
-                output += '<tr>'
-                output += '<td style="text-align:center;">'+ item[0] +'</td>'
-                output += '<td style="text-align:center;">'+ item[1] +'</td>'
-                output += '</tr>'
-                document.getElementById('show_comment').innerHTML += output;
-            });
-
 		}
 
 	});
