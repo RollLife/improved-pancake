@@ -37,6 +37,7 @@ def ajax_add():
 
 	return jsonify({'error' : 'Missing data!'})
 
+
 @app.route('/get_list', methods=['GET'])
 def ajax_show():
 	print ajax
@@ -83,6 +84,7 @@ def update_detail():
 	num = request.args['id']
 	return redirect(url_for('index'))
 
+
 @app.route('/comment', methods=['GET'])
 def comment_insert():
 	print "test text"
@@ -93,6 +95,7 @@ def comment_insert():
 	one_by_one.append(title)
 	one_by_one.append(content)
 	comment_Array[num].append(one_by_one)
+
 
 	# if request.method == 'POST':
 	# 	title = request.form['comment_title']

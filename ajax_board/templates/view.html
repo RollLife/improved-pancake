@@ -107,8 +107,7 @@ $(document).ready(function(){
 					// }
 					success : function(data){
 						count = count - 1
-						alert(comment.length)
-						var comment = data.comment_Array[index]
+						var comment = data.click_comment[index]
 						var click_comment = []
 						click_comment.push(comment.slice(count))
 						console.log(click_comment.slice(0))
@@ -120,6 +119,8 @@ $(document).ready(function(){
 		                output += '<td style="text-align:center;">'+ comment.slice(-1)[0][1] +'</td>'
 		                output += '</tr>'
 		                document.getElementById('show_comment').innerHTML += output;
+                        $("#comment_title").val("");
+                        $("#comment_content").val("");
 					}
 				});
 			});
