@@ -73,7 +73,7 @@ def delete_detail():
 	num = int(request.args['id'])
 	del ajax[num]
 	print num
-	return redirect(url_for('index'))
+	return jsonify({})
 
 @app.route('/update')
 def update_insert():
@@ -81,8 +81,16 @@ def update_insert():
 
 @app.route('/action', methods=['GET'])
 def update_detail():
-	num = request.args['id']
-	return redirect(url_for('index'))
+	print "ss"
+	print ajax
+	num = int(str(request.args['id']))
+	print type(num)
+	title = request.args['title']
+	content = request.args['content']
+
+	ajax[num][0] = title
+	ajax[num][2] = content
+	return jsonify({})
 
 
 @app.route('/comment', methods=['GET'])
